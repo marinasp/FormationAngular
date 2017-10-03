@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
+import { Item } from '../item';
 
 @Component({
   selector: 'app-list-item',
@@ -8,7 +9,7 @@ import { AppComponent } from '../app.component';
 })
 export class ListItemComponent implements OnInit {
 
-  collection: any;
+  collection: Item[];
 
   constructor(private _AppComponent: AppComponent) { }
 
