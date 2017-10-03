@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Item } from './item';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from './modal/modal.component';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +21,7 @@ export class AppComponent implements OnInit {
 
   stateCtrl: FormControl;
 
-  constructor (fb: FormBuilder) {
+  constructor (fb: FormBuilder, private modalService: NgbModal) {
 
     this.nameCtrl = fb.control('', [
                                   Validators.required,
@@ -55,6 +57,7 @@ export class AppComponent implements OnInit {
     //  state:this.form.get('state').value,});
     this.collection.push(this.form.value);
     this.reset();
+    this.open();
 
   }
 
@@ -65,6 +68,11 @@ export class AppComponent implements OnInit {
 
   isError (field: string) {
     return this.form.get(field).dirty && this.form.get(field).hasError('minlength');
+  }
+
+  open() {
+    const modalRef = this.modalService.open(ModalComponent);
+    modalRef.componentInstance.msg = 'Votre commande a été enregistrée!';
   }
 
 
