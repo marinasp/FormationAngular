@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Item } from './item';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,31 @@ export class AppComponent implements OnInit {
 
   collection: Item[];
 
-  newItem: Item;
+  form: FormGroup;
+
+  nameCtrl: FormControl;
+
+  refCtrl: FormControl;
+
+  stateCtrl: FormControl;
+
+  constructor (fb: FormBuilder) {
+
+    this.nameCtrl = fb.control('', [
+                                  Validators.required,
+                                  Validators.minLength(2),
+                                  Validators.pattern('')]);
+    this.refCtrl = fb.control('', [
+                                  Validators.required,
+                                  Validators.minLength(4)]);
+    this.stateCtrl = fb.control(0);
+
+    this.form = fb.group({
+      name: this.nameCtrl,
+      reference: this.refCtrl,
+      state: this.stateCtrl
+    });
+  }
 
   ngOnInit(): void {
     this.collection = [
@@ -19,20 +44,28 @@ export class AppComponent implements OnInit {
       new Item({reference: '6789', name: 'Aurélie', state: 2})
     ];
 
-    this.resetNewItem();
   }
 
   addItem() {
-
-    this.collection.push(this.newItem);
-    this.resetNewItem();
+    console.log(this.form.value);
+    // si les names du form sont différents du model (exemple ref dans form et reference côté model)
+    // this.collection.push({
+    //  name:this.form.get('name').value,
+    //  reference:this.form.get('ref').value,
+    //  state:this.form.get('state').value,});
+    this.collection.push(this.form.value);
+    this.reset();
 
   }
 
-  resetNewItem() {
-    this.newItem = new Item({reference: '', name: '', state: 0});
+  reset() {
+    this.form.reset();
+    this.stateCtrl.setValue(0);
   }
 
+  isError (field: string) {
+    return this.form.get(field).dirty && this.form.get(field).hasError('minlength');
+  }
 
 
 }
