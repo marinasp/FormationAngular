@@ -9,12 +9,27 @@ export class AppComponent implements OnInit {
 
   collection: any;
 
+  newItem: any;
+
   ngOnInit(): void {
     this.collection = [
       {reference: '1234', name: 'Marina', state: 0},
       {reference: '3456', name: 'Julie', state: 1},
       {reference: '6789', name: 'Aurélie', state: 2},
     ];
+
+    this.resetNewItem();
+  }
+
+  addItem() {
+
+    this.collection.push(this.newItem);
+    this.resetNewItem();
+
+  }
+
+  resetNewItem() {
+    this.newItem = {reference: '', name: '', state: 0};
   }
 
 
