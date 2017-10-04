@@ -12,6 +12,7 @@ import { FilterPipe } from './filter.pipe';
 import { StateDirective } from './state.directive';
 import { CollectionService } from './collection.service';
 import { AppRoutingModule } from './app-routing/app-routing.module';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
     ModalComponent,
     FormComponent,
     FilterPipe,
-    StateDirective
+    StateDirective,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
