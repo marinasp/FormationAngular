@@ -1,8 +1,9 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../modal/modal.component';
 import { Item } from '../item';
+import { CollectionService } from '../collection.service';
 
 @Component({
   selector: 'app-form',
@@ -10,8 +11,6 @@ import { Item } from '../item';
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit {
-
-    @Output() add: EventEmitter<Item> = new EventEmitter();
 
     form: FormGroup;
 
@@ -21,7 +20,7 @@ export class FormComponent implements OnInit {
 
     stateCtrl: FormControl;
 
-    constructor (fb: FormBuilder, private modalService: NgbModal) {
+    constructor (fb: FormBuilder, private modalService: NgbModal, private _service: CollectionService) {
 
       this.nameCtrl = fb.control('', [
                                     Validators.required,
@@ -37,6 +36,7 @@ export class FormComponent implements OnInit {
         reference: this.refCtrl,
         state: this.stateCtrl
       });
+
     }
 
   ngOnInit() {
@@ -57,7 +57,7 @@ export class FormComponent implements OnInit {
   }
 
   addItem() {
-    this.add.emit(this.form.value);
+    this._service.addItem(this.form.value);
     this.reset();
     this.open();
   }
