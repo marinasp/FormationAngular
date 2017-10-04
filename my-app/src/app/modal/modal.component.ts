@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 
@@ -7,23 +7,15 @@ import { Router } from '@angular/router';
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss']
 })
-export class ModalComponent implements OnInit {
+
+export class ModalComponent implements OnDestroy {
 
   @Input() msg;
 
   constructor(public activeModal: NgbActiveModal, private _router: Router) {}
 
-  redirectFromCross(){
-    this.activeModal.dismiss('Cross click');
+  ngOnDestroy() {
     this._router.navigate(['/list']);
-  }
-
-  redirectFromClose(){
-    this.activeModal.close('Close click');
-    this._router.navigate(['/list']);
-  }
-
-  ngOnInit() {
   }
 
 }
